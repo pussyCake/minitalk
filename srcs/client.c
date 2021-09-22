@@ -6,7 +6,7 @@
 /*   By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 19:45:16 by pantigon          #+#    #+#             */
-/*   Updated: 2021/09/22 14:33:15 by pantigon         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:32:23 by pantigon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,29 @@ int	error_msg(char *msg)
 	return (1);
 }
 
-void	change_signal(int signal, siginfo_t *siginfo, void *context)
-{
+// void	change_signal(int signal, siginfo_t *siginfo, void *context)
+// {
 	
-}
+// }
+
+// void	sent_msg(int pid, char *msg)
+// {
+	
+// }
 
 int	main(int ac, char **av)
 {
-	struct sigaction sig;
+	// struct sigaction sig;
 
 	if (ac != 3)
 		return (error_msg("ERROR: client request fail!!\n"));
-	sig.sa_flags = SA_SIGINFO;
-	sig.sa_sigaction = change_signal;
-	sigaction(SIGUSR1, &sig, NULL);
-	sigaction(SIGUSR2, &sig, NULL);
+	// sig.sa_flags = SA_SIGINFO;
+	// sig.sa_sigaction = change_signal;
+	// sigaction(SIGUSR1, &sig, NULL);
+	// sigaction(SIGUSR2, &sig, NULL);
+	// sent_msg(ft_atoi(av[1]), av[2]);
 	kill(ft_atoi(av[1]), SIGUSR1);
+	while(1)
+		sleep(1);
 	return (1);
 }
