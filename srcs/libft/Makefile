@@ -6,7 +6,7 @@
 #    By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/29 18:52:01 by pantigon          #+#    #+#              #
-#    Updated: 2021/05/03 16:49:55 by pantigon         ###   ########.fr        #
+#    Updated: 2021/09/22 13:57:34 by pantigon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,20 +69,21 @@ OBJ = $(addprefix $(O_DIR)/,$(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(O_DIR) $(OBJ)
-	ar rc $(NAME) $(OBJ)
+	@ar rc $(NAME) $(OBJ)
+	@echo "LIBFT compiled"
 
 $(O_DIR): 
-	mkdir -p obj
+	@mkdir -p obj
 
 $(O_DIR)/%.o: %.c 
-	gcc $(FLAG) $(HEAD) -o $@ -c $< 
+	@gcc $(FLAG) $(HEAD) -o $@ -c $< 
 
 clean:
-	rm -f $(OBJ)
-	rm -rf $(O_DIR)
+	@rm -f $(OBJ)
+	@rm -rf $(O_DIR)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

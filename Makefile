@@ -6,7 +6,7 @@
 #    By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 19:44:39 by pantigon          #+#    #+#              #
-#    Updated: 2021/09/21 20:54:25 by pantigon         ###   ########.fr        #
+#    Updated: 2021/09/22 13:57:18 by pantigon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,15 @@ NAME = server
 
 FLAG = -Wall -Wextra -Werror
 
-SRCS_C = srcs/client.c
+SRCS_C = client.c
 
-SRCS_S = srcs/server.c
+SRCS_S = server.c
 
-# SRCS = $(SRCS_C), $(SRCS_S)
+SRCS = srcs/$(SRCS_C) srcs/$(SRCS_S)
 
-LIB = srcs/libft
+LIB = srcs/libft/
+
+HEAD = -I./$(LIB)
 
 O_DIR = obj
 
@@ -28,34 +30,32 @@ OBJ_C = $(addprefix $(O_DIR)/,$(SRCS_C:.c=.o))
 
 OBJ_S = $(addprefix $(O_DIR)/,$(SRCS_S:.c=.o))
 
-all: $(NAME)
+all: lib $(O_DIR) $(NAME) client
 
-$(NAME): $(O_DIR) $(OBJ_S) $(OBJ_C)
-	@make -C $(LIB)
-	gcc $< -o 
-
-$(O_DIR): 
+$(O_DIR):
 	mkdir -p obj
 
-$(O_DIR)/%.o: %.c 
-	gcc $(FLAG) $(HEAD) -o $@ -c $< 
-
-# HEAD = -I.
-
-# OBJ = $(SRCS:.c=.o)
-
-all: $(NAME)
-
-$(NAME):  
+lib: 
 	@make -C $(LIB)
-	gcc $(FLAG) -o client
+
+$(NAME): $(OBJ_S)
+	@gcc $<  $(HEAD) -o $@ $(LIB)libft.a
+	@echo "SERVER compiled"
+
+client: $(OBJ_C)
+	@gcc $< $(HEAD) -o $@ $(LIB)libft.a
+	@echo "CLIENT compiled"
+
+$(O_DIR)/%.o: srcs/%.c
+	@gcc $(FLAG) $(HEAD) -o $@ -c $< 
 
 clean:
-	rm -f $(OBJ)
-	rm -rf $(O_DIR)
+	@make -C $(LIB) clean
+	@rm -f $(OBJ_C) $(OBJ_S)
 
 fclean: clean
-	rm -f $(NAME)
+	@make -C $(LIB) fclean
+	@rm -f $(NAME) client
 
 re: fclean all
 
