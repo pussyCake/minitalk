@@ -6,7 +6,7 @@
 #    By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 19:44:39 by pantigon          #+#    #+#              #
-#    Updated: 2021/09/22 14:11:27 by pantigon         ###   ########.fr        #
+#    Updated: 2021/09/22 18:53:28 by pantigon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ client: $(OBJ_C)
 	@echo "CLIENT compiled"
 
 $(O_DIR)/%.o: srcs/%.c
-	@gcc $(FLAG) $(HEAD) -o $@ -c $< 
+	# @gcc $(FLAG) $(HEAD) -o $@ -c $< 
+	@gcc $(HEAD) -o $@ -c $< 
 
 clean:
 	@make -C $(LIB) clean
