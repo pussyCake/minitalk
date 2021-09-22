@@ -6,7 +6,7 @@
 #    By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 19:44:39 by pantigon          #+#    #+#              #
-#    Updated: 2021/09/22 13:57:18 by pantigon         ###   ########.fr        #
+#    Updated: 2021/09/22 14:11:27 by pantigon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ OBJ_S = $(addprefix $(O_DIR)/,$(SRCS_S:.c=.o))
 all: lib $(O_DIR) $(NAME) client
 
 $(O_DIR):
-	mkdir -p obj
+	@mkdir -p obj
 
 lib: 
 	@make -C $(LIB)
@@ -51,6 +51,7 @@ $(O_DIR)/%.o: srcs/%.c
 
 clean:
 	@make -C $(LIB) clean
+	@rm -rf $(O_DIR)
 	@rm -f $(OBJ_C) $(OBJ_S)
 
 fclean: clean
