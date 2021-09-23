@@ -6,7 +6,7 @@
 #    By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 19:44:39 by pantigon          #+#    #+#              #
-#    Updated: 2021/09/23 18:45:39 by pantigon         ###   ########.fr        #
+#    Updated: 2021/09/23 19:42:16 by pantigon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,9 @@ client: $(OBJ_C)
 $(O_DIR)/%.o: srcs/%.c
 	@gcc $(FLAG) $(HEAD) -o $@ -c $< 
 
+norm:
+	norminette srcs/. include/.
+
 clean:
 	@make -C $(LIB) clean
 	@rm -rf $(O_DIR)
@@ -60,4 +63,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY:  all clean fclean re
+.PHONY:  all clean fclean norm re

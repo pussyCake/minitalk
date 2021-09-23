@@ -6,7 +6,7 @@
 /*   By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 19:45:16 by pantigon          #+#    #+#             */
-/*   Updated: 2021/09/23 18:58:48 by pantigon         ###   ########.fr       */
+/*   Updated: 2021/09/23 19:39:25 by pantigon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,16 @@ void	sent_msg(int pid, char *msg)
 int	main(int ac, char **av)
 {
 	struct sigaction	sig;
+	pid_t				pid;
 
-	if (ac != 3)
+	pid = ft_atoi(av[1]);
+	if (ac != 3 || pid <= 0)
 		error_msg("ERROR: client request fail!!\n");
 	sig.sa_flags = SA_SIGINFO;
 	sig.sa_sigaction = change_signal;
 	sigaction(SIGUSR1, &sig, NULL);
 	sigaction(SIGUSR2, &sig, NULL);
-	sent_msg(ft_atoi(av[1]), av[2]);
+	sent_msg(pid, av[2]);
 	while (1)
 		pause();
 	return (1);
