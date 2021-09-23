@@ -6,7 +6,7 @@
 #    By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 19:44:39 by pantigon          #+#    #+#              #
-#    Updated: 2021/09/22 18:53:28 by pantigon         ###   ########.fr        #
+#    Updated: 2021/09/23 18:45:39 by pantigon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS = srcs/$(SRCS_C) srcs/$(SRCS_S)
 
 LIB = srcs/libft/
 
-HEAD = -I./$(LIB)
+HEAD = -I./$(LIB) -I./include/
 
 O_DIR = obj
 
@@ -47,8 +47,7 @@ client: $(OBJ_C)
 	@echo "CLIENT compiled"
 
 $(O_DIR)/%.o: srcs/%.c
-	# @gcc $(FLAG) $(HEAD) -o $@ -c $< 
-	@gcc $(HEAD) -o $@ -c $< 
+	@gcc $(FLAG) $(HEAD) -o $@ -c $< 
 
 clean:
 	@make -C $(LIB) clean

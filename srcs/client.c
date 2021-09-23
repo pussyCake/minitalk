@@ -6,14 +6,11 @@
 /*   By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 19:45:16 by pantigon          #+#    #+#             */
-/*   Updated: 2021/09/22 18:59:44 by pantigon         ###   ########.fr       */
+/*   Updated: 2021/09/23 18:58:48 by pantigon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <signal.h>
-#include "libft.h"
-#include <stdio.h>
+#include "minitalk.h"
 
 int	error_msg(char *msg)
 {
@@ -27,10 +24,10 @@ void	change_signal(int signal, siginfo_t *siginfo, void *context)
 	(void)context;
 	if (signal == SIGUSR1)
 	{
-		ft_putstr_fd("server [" ,1);
+		ft_putstr_fd("server [", 1);
 		ft_putnbr_fd(siginfo->si_pid, 1);
 		ft_putstr_fd("]: done\n", 1);
-		// exit(0);
+		exit(0);
 	}
 }
 
@@ -38,12 +35,12 @@ void	sent_msg(int pid, char *msg)
 {
 	int	n;
 
-	n = 128;
-	while (*msg)
+	while (*msg || *msg == '\0')
 	{
-		while (n > 0)
+		n = 0;
+		while (n < 9)
 		{
-			if ((*msg & n) > 0)
+			if (((*msg >> n) & 1) > 0)
 			{
 				if (kill(pid, SIGUSR1) != 0)
 					error_msg("PID incorrect\n");
@@ -54,16 +51,17 @@ void	sent_msg(int pid, char *msg)
 					error_msg("PID incorrect\n");
 			}
 			usleep(100);
-			printf("%d\n", n);
-			n /= 2;
+			++n;
 		}
+		if (*msg == '\0')
+			return ;
 		msg++;
 	}
 }
 
 int	main(int ac, char **av)
 {
-	struct sigaction sig;
+	struct sigaction	sig;
 
 	if (ac != 3)
 		error_msg("ERROR: client request fail!!\n");
@@ -72,8 +70,7 @@ int	main(int ac, char **av)
 	sigaction(SIGUSR1, &sig, NULL);
 	sigaction(SIGUSR2, &sig, NULL);
 	sent_msg(ft_atoi(av[1]), av[2]);
-	// kill(ft_atoi(av[1]), SIGUSR1);
-	while(1)
+	while (1)
 		pause();
 	return (1);
 }
