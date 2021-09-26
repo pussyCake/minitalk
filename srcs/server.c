@@ -6,7 +6,7 @@
 /*   By: pantigon <pantigon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 19:45:12 by pantigon          #+#    #+#             */
-/*   Updated: 2021/09/23 19:26:21 by pantigon         ###   ########.fr       */
+/*   Updated: 2021/09/23 20:48:06 by pantigon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_data(void)
 	g_data.chr = 0;
 }
 
-void	client_id(pid_t cid)
+void	print_client_id(pid_t cid)
 {
 	g_data.cid = cid;
 	ft_putstr_fd("client [", 1);
@@ -32,7 +32,7 @@ void	change_signal(int signal, siginfo_t *siginfo, void *context)
 {
 	(void)context;
 	if (g_data.cid != siginfo->si_pid)
-		client_id(siginfo->si_pid);
+		print_client_id(siginfo->si_pid);
 	if (g_data.byte == 8)
 	{
 		ft_putchar_fd(g_data.chr, 1);
